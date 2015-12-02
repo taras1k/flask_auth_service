@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-from extensions import db
+from extensions import db, oauth
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
@@ -12,6 +12,7 @@ app.config.from_object(os.environ.get('APP_CONFIG_CLASS'))
 
 db.init_app(app)
 db.app = app
+oauth.init_app(app)
 manager = Manager(app)
 migrate = Migrate(app, db)
 

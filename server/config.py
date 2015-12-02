@@ -7,7 +7,7 @@ class Config(object):
     TESTING = False
     LOG_FILE = '%s/app.log' % BASEDIR
     WSGI_SCRIPT = '%s/app.sock' % BASEDIR
-    DATABASE_URI = 'sqlite://:memory:'
+    DATABASE_URI = 'sqlite://dev.db'
 
 
 class ProductionConfig(Config):
@@ -16,6 +16,7 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 
 class TestingConfig(Config):

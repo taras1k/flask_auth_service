@@ -13,4 +13,14 @@ class User(db.Model):
     active = db.Column('is_active', db.Boolean(), nullable=False,
                         server_default='0')
 
+    def is_authenticated(self):
+        return True
 
+    def is_active(self):
+        return self.active
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id
