@@ -7,7 +7,8 @@ class Config(object):
     TESTING = False
     LOG_FILE = '%s/app.log' % BASEDIR
     WSGI_SCRIPT = '%s/app.sock' % BASEDIR
-    DATABASE_URI = 'sqlite://dev.db'
+    OAUTH_GRANT_EXPIRE = 100
+    DATABASE_URI = 'sqlite:///dev.db'
 
 
 class ProductionConfig(Config):
