@@ -15,13 +15,13 @@ logger = logging.getLogger('alembic.env')
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-from apps.user import models
-from apps.oauth import models
+from apps.user.models import User
+from apps.oauth.models import Client, Grant, Token
 
 # target_metadata = mymodel.Base.metadata
 from flask import current_app
 config.set_main_option('sqlalchemy.url',
-                       current_app.config.get('DATABASE_URI'))
+                       current_app.config.get('SQLALCHEMY_DATABASE_URI'))
 target_metadata = current_app.extensions['migrate'].db.metadata
 
 # other values from the config, defined by the needs of env.py,

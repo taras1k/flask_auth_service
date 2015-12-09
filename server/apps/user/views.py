@@ -1,7 +1,9 @@
-from flask import Blueprint, request, abort, jsonify
+from flask import Blueprint, request, jsonify
 from flask.ext.login import login_user, login_required
 from flask.ext.login import logout_user
-from extensions import login_manager
+from extensions import login_manager, db
+
+from app_exceptions import UserInputError
 from .models import User
 
 
@@ -28,6 +30,22 @@ def login():
     if user and user.check_password(password):
         login_user(user)
     else:
-        abort(400)
-        return jsonify({'status': True})
+        raise UserInputError('login error')
+    return jsonify({'status': True})
 
+
+@user_app.route('/register', methods=['POST'])
+def reqister():
+    email = request.form.get('email')
+    password = request.form.get('password')
+    #! TODO add password required and email validation
+    password_confirm = request.form.get('password_confirm')
+    if password != password_confirm:
+        raise UserInputError('password_missmatch', payload={'password': 'mismatch'})
+    user = User.query.filter_by(email=email).first()
+    if user:
+        raise UserInputError('email_exists ', payload={'email': 'email_exists'})
+    user = User(email, password)
+    db.session.add(user)
+    db.session.commit()
+    return jsonify({'status': True})

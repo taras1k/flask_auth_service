@@ -8,11 +8,11 @@ class Config(object):
     LOG_FILE = '%s/app.log' % BASEDIR
     WSGI_SCRIPT = '%s/app.sock' % BASEDIR
     OAUTH_GRANT_EXPIRE = 100
-    DATABASE_URI = 'sqlite:///dev.db'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://docker:docker@localhost:5432/flask_auth_service'
 
 
 class ProductionConfig(Config):
-    DATABASE_URI = os.environ.get('DATABASE_URI')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
 
 
 class DevelopmentConfig(Config):
